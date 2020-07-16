@@ -46,11 +46,6 @@ inline void ReplaceString(std::string& target, const std::string& from, const st
     }
 }
 
-inline void GetLastStrDelim(std::string& copy_str, const std::string str_read, const char delim) {
-    size_t last_delim_pos = str_read.find_last_of(delim) + 1;
-    copy_str = str_read.substr(last_delim_pos, str_read.length() - last_delim_pos);
-}
-
 int main(int argc, char* argv[])
 {
     std::ios_base::sync_with_stdio(false); /*no need for sync with all iostream std */
