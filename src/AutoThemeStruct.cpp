@@ -57,18 +57,18 @@ int main(int argc, char* argv[])
     
     const std::string theme_name = argv[1];
 
-    std::string parent_dir = argc >= PARENT_DIR_ARGC ? argv[2] : "";
-    bool using_parent_dir = parent_dir != "";
+    std::string parent_dir = argc >= PARENT_DIR_ARGC ? argv[2] : ""; /*initalises parent_dir as arg if argc is >= PARENT_DIR_ARGC*/
+    bool using_parent_dir = parent_dir != ""; /*has the user specified a parent dir*/
 
-    if (using_parent_dir) { std::replace(parent_dir.begin(), parent_dir.end(), '\\', '/'); } //win32 directory split char
+    if (using_parent_dir) { std::replace(parent_dir.begin(), parent_dir.end(), '\\', '/'); } /*win32 directory split char changed from \\ to / */
 
-    if (parent_dir.back() != '/') {
+    if (parent_dir.back() != '/') { /*checking if specified parent directory has a trailing / */
         parent_dir.push_back('/');
     }
 
     const std::string theme_dir_name = theme_name + ".theme";
     
-    if (IllegalCharCheck(theme_name, disallowed_characters_)) {
+    if (IllegalCharCheck(theme_name, disallowed_characters_)) { /*illegal character(s) check for specified theme name*/
         std::cerr << illegal_char_prefix << "theme name" << illegal_char_suffix;
         return -1;
 
@@ -93,9 +93,11 @@ int main(int argc, char* argv[])
     const std::string dir_struct_a = theme_dir_name + "/IconBundles";
     const std::string dir_struct_b = theme_dir_name + "/Bundles/com.apple.mobileicons.framework";
 
+    /*creating basic directory struct*/
     const bool struct_a_status = fs::create_directories(using_parent_dir ? parent_dir + dir_struct_a : dir_struct_a);
     const bool struct_b_status = fs::create_directories(using_parent_dir ? parent_dir + dir_struct_b : dir_struct_b);
 
+    /*checking if directories were successfully created*/
     if (!struct_a_status
         || !struct_b_status) {
 
@@ -103,6 +105,7 @@ int main(int argc, char* argv[])
         return -1;
     }
 
+    /*creating required Info.plist*/
     std::ofstream info(using_parent_dir ? parent_dir + theme_dir_name + "/Info.plist" : theme_dir_name + "/Info.plist");
     if (!info.is_open()) {
         std::cerr << error_create_file_prefix << "Info.plist" << error_create_file_suffix;
@@ -112,6 +115,7 @@ int main(int argc, char* argv[])
 
     std::string plist_data = base_plist;
 
+    /*modifying plist changeable data from uinput*/
     ReplaceString(plist_data, "ExampleThemeName", theme_name);
     ReplaceString(plist_data, "ExamplePackageName", theme_name);
 
@@ -126,5 +130,5 @@ int main(int argc, char* argv[])
     if (using_parent_dir) { std::cout << fsucess_parent; }
     else { std::cout << fsucess_no_parent; }
 
-    return 0;
+    return 0; /*success*/
 }
