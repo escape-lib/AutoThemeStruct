@@ -1,3 +1,5 @@
+/* Copyright © 2019 escape-lib. All rights reserved.*/
+
 #include <iostream>
 #include <string>
 
