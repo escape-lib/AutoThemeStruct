@@ -27,7 +27,8 @@ bool IllegalCharCheck(const std::string& target, const std::string& char_set) {
     return false;
 }
 
-const std::string base_plist = R"(<?xml version="1.0" encoding="UTF-8"?>
+/*_ prefix marking as raw*/
+const std::string _base_plist = R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
@@ -115,7 +116,8 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    std::string plist_data = base_plist;
+    std::string plist_data = 
+        ;
 
     /*modifying plist changeable data from uinput*/
     ReplaceString(plist_data, "ExampleThemeName", theme_name);
